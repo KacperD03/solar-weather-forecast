@@ -4,9 +4,8 @@ const cors = require('cors');
 const app = express();
 const PORT = 5000;
 
-app.use(cors());  // Pozwala na CORS, żeby frontend mógł się łączyć z backendem
+app.use(cors());
 
-// Endpoint do 7-dniowej prognozy
 app.get('/weather', async (req, res) => {
   const { lat, lon } = req.query;
   if (!lat || !lon) {
@@ -18,35 +17,32 @@ app.get('/weather', async (req, res) => {
       params: {
         latitude: lat,
         longitude: lon,
-        daily: 'temperature_2m_min,temperature_2m_max,precipitation_sum,sunshine_duration', // Usunięto `pressure_mean`
+        daily: 'temperature_2m_min,temperature_2m_max,precipitation_sum,sunshine_duration',
         timezone: 'Europe/Warsaw',
       }
     });
 
     const data = weatherResponse.data.daily;
 
-    console.log('API response data:', data);  // Logowanie odpowiedzi z API
-
-    // Sprawdzamy, czy odpowiedź zawiera odpowiednie dane
     const weatherData = data.time.map((date, idx) => {
-      const energy = (2.5 * data.sunshine_duration[idx] / 3600 * 0.2).toFixed(2); // Przelicza energię na kWh
+      const sunshineInHours = data.sunshine_duration[idx] / 3600;
+      const energy = (2.5 * sunshineInHours * 0.2).toFixed(2);
       return {
         date: date,
         minTemp: data.temperature_2m_min[idx],
         maxTemp: data.temperature_2m_max[idx],
         energy: energy,
-        weatherCode: data.precipitation_sum[idx] > 0 ? 'Rainy' : 'Clear', // Prosty przykład na podstawie opadów
+        weatherCode: data.precipitation_sum[idx] > 0 ? 'Rainy' : 'Clear',
       };
     });
 
-    res.json(weatherData); // Zwrócenie danych w formacie JSON
+    res.json(weatherData);
   } catch (error) {
     console.error('Error fetching weather data:', error);
     res.status(500).json({ error: 'Failed to fetch weather data' });
   }
 });
 
-// Endpoint do podsumowania tygodnia
 app.get('/summary', async (req, res) => {
   const { lat, lon } = req.query;
   if (!lat || !lon) {
@@ -58,20 +54,21 @@ app.get('/summary', async (req, res) => {
       params: {
         latitude: lat,
         longitude: lon,
-        daily: 'temperature_2m_min,temperature_2m_max,sunshine_duration,precipitation_sum', // Usunięto `pressure_mean`
+        daily: 'temperature_2m_min,temperature_2m_max,sunshine_duration,precipitation_sum',
         timezone: 'Europe/Warsaw',
       }
     });
 
     const data = response.data.daily;
 
-    const avgSunshine = data.sunshine_duration.reduce((acc, day) => acc + day, 0) / data.sunshine_duration.length;
+    const avgSunshine = data.sunshine_duration.map(day => day / 3600).reduce((acc, day) => acc + day, 0) / data.sunshine_duration.length;
+    const avgSunshineFixed = avgSunshine.toFixed(2);
     const minTemp = Math.min(...data.temperature_2m_min);
     const maxTemp = Math.max(...data.temperature_2m_max);
     const hasRain = data.precipitation_sum.some(day => day > 0);
 
     res.json({
-      avgSunshine,
+      avgSunshineFixed,
       minTemp,
       maxTemp,
       weatherSummary: hasRain ? 'z opadami' : 'bez opadów',
