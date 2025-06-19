@@ -62,10 +62,10 @@ export default function Home() {
 
         <footer className="bg-indigo-700 text-white p-4 rounded-lg mt-8 shadow-md">
           <h3 className="text-lg font-semibold mb-4">Podsumowanie tygodnia</h3>
-          <p className="mb-2">Średnie ciśnienie: {summaryData.avgPressure} hPa</p>
-          <p className="mb-2">Średni czas ekspozycji na słońce: {summaryData.avgSunshineFixed} h</p>
+          <p className="mb-2">Średnie ciśnienie powierzchniowe: {summaryData.avgPressure} hPa</p>
+          <p className="mb-2">Średni czas ekspozycji na słońce: {summaryData.avgSunshine} h</p>
           <p className="mb-2">Skrajne temperatury: {summaryData.minTemp}°C - {summaryData.maxTemp}°C</p>
-          <p className="text-lg font-semibold">{summaryData.weatherSummary}</p>
+          <p className="mb-2">Pogoda: {summaryData.weatherSummary}</p>
         </footer>
       </main>
     </div>

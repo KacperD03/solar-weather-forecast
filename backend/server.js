@@ -54,21 +54,29 @@ app.get('/summary', async (req, res) => {
       params: {
         latitude: lat,
         longitude: lon,
-        daily: 'temperature_2m_min,temperature_2m_max,sunshine_duration,precipitation_sum',
+        daily: 'temperature_2m_min,temperature_2m_max,sunshine_duration,precipitation_sum,surface_pressure_mean',
         timezone: 'Europe/Warsaw',
       }
     });
+    
 
     const data = response.data.daily;
 
-    const avgSunshine = data.sunshine_duration.map(day => day / 3600).reduce((acc, day) => acc + day, 0) / data.sunshine_duration.length;
-    const avgSunshineFixed = avgSunshine.toFixed(2);
+    const avgSunshine = data.sunshine_duration
+      .map(day => day / 3600)
+      .reduce((acc, day) => acc + day, 0) / data.sunshine_duration.length;
+
+    const avgPressure = data.surface_pressure_mean
+      .reduce((acc, day) => acc + day, 0) / data.surface_pressure_mean.length;
+
     const minTemp = Math.min(...data.temperature_2m_min);
     const maxTemp = Math.max(...data.temperature_2m_max);
+
     const hasRain = data.precipitation_sum.some(day => day > 0);
 
     res.json({
-      avgSunshineFixed,
+      avgSunshine: avgSunshine.toFixed(2),
+      avgPressure: avgPressure.toFixed(2),
       minTemp,
       maxTemp,
       weatherSummary: hasRain ? 'z opadami' : 'bez opadów',
