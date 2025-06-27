@@ -1,5 +1,7 @@
 # Solar Weather Forecast
 
+https://letter-sort.netlify.app/
+
 Aplikacja do wyświetlania 7-dniowej prognozy pogody oraz oszacowania produkcji energii z instalacji fotowoltaicznej. Aplikacja korzysta z zewnętrznego API (Open Meteo) do pobierania danych pogodowych i oblicza szacowaną ilość energii w kWh, którą można wygenerować w danym okresie.
 
 ## Technologie
