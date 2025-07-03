@@ -1,7 +1,5 @@
 # Solar Weather Forecast
 
-https://letter-sort.netlify.app/
-
 The app displays a 7-day weather forecast and estimates the energy production from a photovoltaic system. It uses an external API (Open Meteo) to fetch weather data and calculates the estimated amount of energy in kWh that can be generated during a given period.
 
 ## Technologies
