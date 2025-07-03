@@ -2,43 +2,43 @@
 
 https://letter-sort.netlify.app/
 
-Aplikacja do wyświetlania 7-dniowej prognozy pogody oraz oszacowania produkcji energii z instalacji fotowoltaicznej. Aplikacja korzysta z zewnętrznego API (Open Meteo) do pobierania danych pogodowych i oblicza szacowaną ilość energii w kWh, którą można wygenerować w danym okresie.
+The app displays a 7-day weather forecast and estimates the energy production from a photovoltaic system. It uses an external API (Open Meteo) to fetch weather data and calculates the estimated amount of energy in kWh that can be generated during a given period.
 
-## Technologie
+## Technologies
 
 - **Frontend**: Next.js
 - **Backend**: Node.js (Express)
 - **API**: Open Meteo
-- **Baza Danych**: Brak (wszystkie dane pochodzą z API)
+- **Database**: None (All data comes from the API)
 
-## Funkcje
+## Features
 
-1. **Prognoza pogody**:
-   - Wyświetlanie 7-dniowej prognozy pogody z minimalną i maksymalną temperaturą.
-   - Pokazywanie szacowanej produkcji energii z instalacji fotowoltaicznej (w kWh) na podstawie czasu ekspozycji na słońce.
-   - Wizualizacja danych pogodowych w tabeli z codziennymi informacjami.
+1. **Weather Forecast**:
+   - Displays a 7-day weather forecast with minimum and maximum temperatures.
+   - Shows the estimated solar energy production (in kWh) based on the sun exposure time.
+   - Visualizes the weather data in a table with daily details.
 
-2. **Podsumowanie tygodnia**:
-   - Wyświetlanie średniego ciśnienia w ciągu tygodnia.
-   - Obliczenie średniego czasu ekspozycji na słońce.
-   - Wyświetlanie skrajnych temperatur tygodnia.
-   - Krótkie podsumowanie przewidywanych warunków pogodowych (z opadami, bez opadów).
+2. **Weekly Summary**:
+   - Displays the average pressure for the week.
+   - Calculates the average sun exposure time.
+   - Shows the extreme temperatures for the week.
+   - Provides a brief summary of the expected weather conditions (with or without precipitation).
 
-## Uruchamianie
+## Running
 
-Uruchom serwer backendowy:
+Start the backend server:
 ```bash
    node server.js
 ```
 
-Backend będzie dostępny pod adresem: http://localhost:5000.
+The backend will be available at: http://localhost:5000.
 
-Uruchom aplikację frontendową:
+Start the frontend application:
 
 ```bash
    npm run dev
 ```
 
-Frontend będzie dostępny pod adresem: http://localhost:3000.
+The frontend will be available at: http://localhost:3000.
 
 ![alt text](image.png)
